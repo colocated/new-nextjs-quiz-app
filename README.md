@@ -59,6 +59,17 @@ npm run dev        # http://localhost:3000
 Add `OPENAI_API_KEY=...` to the app's `.env.local` to enable the AI features. Without a key the app
 works fully and simply hides them.
 
+## OpenAI API key (optional, for the AI features)
+
+The generated app only calls `POST /v1/chat/completions`, so use a **Restricted** key:
+
+1. platform.openai.com -> API keys -> Create new secret key -> **Restricted**.
+2. Leave everything at **None** except Model capabilities -> **Chat completions (`/v1/chat/completions`)** = **Write**.
+3. Put it in the app's `.env.local` as `OPENAI_API_KEY=...`. Never commit it.
+4. Set a low monthly budget under Billing -> Limits, and use a dedicated Project for the app.
+
+Full guide and best practice: [`reference/openai-key-setup.md`](reference/openai-key-setup.md).
+
 ## Requirements
 
 - Claude Code
@@ -74,6 +85,7 @@ reference/design-system.md    tokens and exact Tailwind class recipes
 reference/code-templates.md   full source for every non-content file
 reference/question-bank.md    schema, quality bar, personalisation, validator script
 reference/ai-integration.md   /api/ai route, ChatPanel, prompts, truncation handling
+reference/openai-key-setup.md restricted-key permissions and best practice
 ```
 
 ## License

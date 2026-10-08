@@ -20,6 +20,7 @@ skill folder:
 | `reference/code-templates.md` | Complete source for every non-content file | While writing code |
 | `reference/question-bank.md` | Question schema, types, quality bar, authoring workflow, personalisation | Before writing questions |
 | `reference/ai-integration.md` | `/api/ai` route, prompts, chat, truncation/continue, safety | Before writing AI features |
+| `reference/openai-key-setup.md` | Restricted-key permissions + best practice | When writing the README and hand-off |
 
 Read each reference file in full when its row says so. Do not skim - the details (e.g. the
 `LayoutProps<"/">` type, `params` being a Promise, `force-dynamic`) are what make the app work.
@@ -189,7 +190,8 @@ If anything fails, fix and re-run. Report honestly what you did and did not veri
 
 Tell the user (concisely):
 - Folder path, how to run: `cd <slug> && npm run dev` -> http://localhost:3000
-- Where to put the OpenAI key (`.env.local`) and that AI features are off without it
+- Where to put the OpenAI key (`.env.local`), that AI features are off without it, and the key advice from `reference/openai-key-setup.md`: create a **Restricted** key with only **Chat completions (`/v1/chat/completions`)** enabled, everything else None, plus a low billing limit
+- Copy the substance of `reference/openai-key-setup.md` into the generated app's `README.md` as an "OpenAI API key" section
 - Domains and question counts (a small table), and what was personalised from their CV/description
 - How to add questions (edit a domain file; ids unique; validator command)
 - Anything not verified (e.g. AI calls without a real key)
@@ -200,5 +202,5 @@ Tell the user (concisely):
 - [ ] Look & feel matches `reference/design-system.md` (violet accent, neutral surfaces, rounded-2xl cards, dark mode via `dark:` classes)
 - [ ] Question counts hit the plan; validator passes
 - [ ] No personal data from the CV in source or prompts
-- [ ] README explains run, structure, AI setup, adding questions
+- [ ] README explains run, structure, AI setup (including restricted-key permissions), adding questions
 - [ ] tsc, lint, build all pass
