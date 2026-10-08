@@ -64,7 +64,7 @@ works fully and simply hides them.
 The generated app only calls `POST /v1/chat/completions`, so use a **Restricted** key:
 
 1. platform.openai.com -> API keys -> Create new secret key -> **Restricted**.
-2. Leave everything at **None** except Model capabilities -> **Chat completions (`/v1/chat/completions`)** = **Write**.
+2. Leave everything at **None** except Model capabilities -> **Chat completions (`/v1/chat/completions`)** = **Request**.
 3. Put it in the app's `.env.local` as `OPENAI_API_KEY=...`. Never commit it.
 4. Set a low monthly budget under Billing -> Limits, and use a dedicated Project for the app.
 

@@ -14,7 +14,7 @@ So the key only needs one permission.
 
    | Permission | Setting |
    |---|---|
-   | Model capabilities -> **Chat completions (`/v1/chat/completions`)** | **Write** (the level that allows sending requests; some dashboards label it "Request") |
+   | Model capabilities -> **Chat completions (`/v1/chat/completions`)** | **Request** |
    | Everything else (Agents, Traces, Vaults, Voices, List models, Responses, Decisions, Text-to-speech, Realtime, Live, Embeddings, Images, Moderations, Threads, Evals, Fine-tuning, Files, Videos, ...) | **None** |
 
 5. Create the key and copy it immediately (it is shown once).
