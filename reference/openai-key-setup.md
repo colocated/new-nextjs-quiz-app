@@ -21,7 +21,7 @@ So the key only needs one permission.
 6. Put it in the app's `.env.local`:
    ```
    OPENAI_API_KEY=sk-...
-   OPENAI_MODEL=gpt-4o-mini
+   OPENAI_MODEL=gpt-5.4-mini
    ```
    Restart `npm run dev` after changing env files.
 
@@ -35,14 +35,14 @@ nothing more.
 
 The app reads the model from the `OPENAI_MODEL` environment variable in `.env.local` (see
 `src/app/api/ai/route.ts`). If it is unset it falls back to the legacy `OPENAI_EXPLAIN_MODEL`, and
-then to the built-in default **`gpt-4o-mini`**: cheap, fast and plenty for short explanations.
+then to the built-in default **`gpt-5.4-mini`**: the latest mini model, cheap and fast, and plenty for short explanations. It is in the 2.5M-token free group below.
 
 To change it later:
 
-1. Edit `.env.local`, e.g. `OPENAI_MODEL=gpt-4.1-mini`.
+1. Edit `.env.local`, e.g. `OPENAI_MODEL=gpt-5.4-nano` (cheaper) or `gpt-5.4` (stronger).
 2. Restart `npm run dev` (Next.js only reads env files at startup).
 3. No key permission change is needed; any model reachable through Chat completions works. If you have restricted the Project's allowed models, add the new one there too.
-4. If a model rejects the request (some reasoning models do not accept `temperature`, or want a different token parameter), remove `temperature: 0.4` from the request body in `route.ts`. Check the model's page in the OpenAI docs for its supported parameters.
+4. The request sends no `temperature` and uses `max_completion_tokens` (1200) so it works with GPT-5-family models. Reasoning tokens count toward that cap: if answers come back empty or cut off, raise it in `route.ts`. Check the model's page in the OpenAI docs for supported parameters.
 
 Bigger models give better explanations but cost more and are slower. For a study app, the default is usually the right trade-off.
 
@@ -58,7 +58,7 @@ org is eligible you will see "You're enrolled for complimentary daily tokens".
 
 What to know (as of when this was written; OpenAI can change the terms, so trust the page above):
 
-- **Allowance:** up to 1M tokens/day on the larger models and up to 10M/day on the smaller models. On usage tiers 1-2 (typical for new accounts) that is **250k and 2.5M** respectively. `gpt-4o-mini`, the app's default, is in the smaller-model group.
+- **Allowance** (from the eligibility banner in the dashboard; the numbers below were read from it): up to **250 thousand tokens/day** across `gpt-5.4`, `gpt-5.2`, `gpt-5.1`, `gpt-5`, `gpt-4.1`, `gpt-4o`, `o1` and `o3`; and up to **2.5 million tokens/day** across `gpt-5.4-mini`, `gpt-5.4-nano`, `gpt-5-mini`, `gpt-5-nano`, `gpt-4.1-mini`, `gpt-4.1-nano`, `gpt-4o-mini`, `o3-mini` and `o4-mini`. Usage beyond these limits, and any other model, is billed at standard rates. `gpt-5.4-mini`, the app's default, is in the 2.5M group. Higher tiers may see larger allowances; the banner on your own account is authoritative.
 - **Per project:** you can share only selected Projects, and only usage in those Projects qualifies. Create the key inside a shared Project.
 - **You still need a positive balance** on the account. Free tokens show on the Usage page but not as a cost.
 - **Not eligible:** Enterprise orgs and Zero Data Retention orgs; fine-tuned models, evals and tool use are excluded. If you do not see the eligibility banner, you are not eligible.
@@ -73,7 +73,7 @@ What to know (as of when this was written; OpenAI can change the terms, so trust
 - **Never commit it.** The generated `.gitignore` excludes `.env*`; keep the key only in `.env.local`. Do not put it in a `NEXT_PUBLIC_*` variable (that would ship it to the browser) and do not paste it into chats, issues or screenshots. If it leaks, revoke it in the dashboard at once and create a new one.
 - **Local only:** the app has no auth, so `/api/ai` is open to anyone who can reach the server. Run it on `localhost`. If you ever deploy it publicly, add authentication and rate limiting first, or anyone could spend your credits.
 - **Rotate** the key occasionally and delete keys you no longer use. The dashboard shows each key's last-used date.
-- **Model choice:** `gpt-4o-mini` is cheap and fine for explanations. Change `OPENAI_MODEL` to trade cost for quality; no permission change is needed.
+- **Model choice:** `gpt-5.4-mini` is cheap and fine for explanations. Change `OPENAI_MODEL` to trade cost for quality; no permission change is needed.
 
 ## Checking that it works
 

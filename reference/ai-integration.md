@@ -19,10 +19,10 @@ AI is optional. `process.env.OPENAI_API_KEY` unset ->
 - `/chat` shows the amber setup hint instead of the chat UI
 - Nothing else calls the network.
 
-Env vars (`.env.local`): `OPENAI_API_KEY`, `OPENAI_MODEL` (default `gpt-4o-mini`; the original also
-honoured legacy `OPENAI_EXPLAIN_MODEL`). If the user asks for a newer/other model, just set
-`OPENAI_MODEL`; if the chosen model rejects `temperature` (some reasoning models do), drop that field
-and keep `max_completion_tokens`.
+Env vars (`.env.local`): `OPENAI_API_KEY`, `OPENAI_MODEL` (default `gpt-5.4-mini`; the original also
+honoured legacy `OPENAI_EXPLAIN_MODEL`). To use another model, just set `OPENAI_MODEL`. The route
+deliberately sends no `temperature` so it works with reasoning models; if you switch to an older
+non-reasoning model and want a custom temperature, add it back.
 
 ## `src/app/api/ai/route.ts`
 
@@ -83,10 +83,11 @@ export async function POST(request: Request) {
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: process.env.OPENAI_MODEL || process.env.OPENAI_EXPLAIN_MODEL || "gpt-4o-mini",
+        model: process.env.OPENAI_MODEL || process.env.OPENAI_EXPLAIN_MODEL || "gpt-5.4-mini",
         messages,
-        temperature: 0.4,
-        max_completion_tokens: 800,
+        // No `temperature`: GPT-5-family reasoning models may reject non-default values.
+        // Reasoning tokens count toward this cap, so leave headroom above the visible answer.
+        max_completion_tokens: 1200,
       }),
     });
 
@@ -143,7 +144,7 @@ and networking." - never names, employers, or contact details.
 
 ## Truncation & Continue (important UX detail)
 
-`max_completion_tokens: 800` means long answers get cut. The route returns `truncated: true` when
+`max_completion_tokens: 1200` means long answers get cut. The route returns `truncated: true` when
 `finish_reason === "length"`. The chat then shows a pill **"Response was cut off · Continue"**.
 Continue sends the full history plus a hidden user instruction, and *stitches* the result onto the
 previous assistant message (the instruction is never shown or saved):
