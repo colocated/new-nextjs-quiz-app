@@ -68,6 +68,8 @@ The generated app only calls `POST /v1/chat/completions`, so use a **Restricted*
 3. Put it in the app's `.env.local` as `OPENAI_API_KEY=...`. Never commit it.
 4. Set a low monthly budget under Billing -> Limits, and use a dedicated Project for the app.
 
+Usage is usually free for a quiz app if you opt in to [data sharing](https://platform.openai.com/settings/organization/data-controls/sharing) (privacy trade-off, see the guide). The model defaults to `gpt-4o-mini`; change it with `OPENAI_MODEL` in `.env.local`.
+
 Full guide and best practice: [`reference/openai-key-setup.md`](reference/openai-key-setup.md).
 
 ## Requirements

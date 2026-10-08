@@ -190,7 +190,7 @@ If anything fails, fix and re-run. Report honestly what you did and did not veri
 
 Tell the user (concisely):
 - Folder path, how to run: `cd <slug> && npm run dev` -> http://localhost:3000
-- Where to put the OpenAI key (`.env.local`), that AI features are off without it, and the key advice from `reference/openai-key-setup.md`: create a **Restricted** key with only **Chat completions (`/v1/chat/completions`)** set to **Request**, everything else None, plus a low billing limit
+- Where to put the OpenAI key (`.env.local`), that AI features are off without it, and the key advice from `reference/openai-key-setup.md`: create a **Restricted** key with only **Chat completions (`/v1/chat/completions`)** set to **Request**, everything else None, plus a low billing limit; mention the default model (`gpt-4o-mini`, changed via `OPENAI_MODEL`) and that data sharing can make usage free, with its privacy trade-off
 - Copy the substance of `reference/openai-key-setup.md` into the generated app's `README.md` as an "OpenAI API key" section
 - Domains and question counts (a small table), and what was personalised from their CV/description
 - How to add questions (edit a domain file; ids unique; validator command)
